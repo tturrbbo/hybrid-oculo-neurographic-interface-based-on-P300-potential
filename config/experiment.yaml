@@ -1,0 +1,242 @@
+camera:
+  index: 0
+  fallback_index: 0
+  width: 1920
+  height: 1080
+  fps:
+    
+
+screen:
+  baseline_distance_cm: 80.0
+  distance_tolerance_cm: 1.0
+
+head_precalibration:
+
+  enabled: false
+  prepare_seconds: 7.0
+  collect_seconds: 3.4
+
+  targets:
+    - marker: 1
+      direction: CENTER
+      angle_deg: 0.0
+
+    - marker: 2
+      direction: RIGHT
+      angle_deg: 11.4
+    - marker: 3
+      direction: RIGHT
+      angle_deg: 22.0
+    - marker: 4
+      direction: RIGHT
+      angle_deg: 31.2
+
+    - marker: 5
+      direction: LEFT
+      angle_deg: 11.4
+    - marker: 6
+      direction: LEFT
+      angle_deg: 22.0
+    - marker: 7
+      direction: LEFT
+      angle_deg: 31.2
+
+    - marker: 8
+      direction: UP
+      angle_deg: 11.4
+    - marker: 9
+      direction: UP
+      angle_deg: 22.0
+    - marker: 10
+      direction: UP
+      angle_deg: 31.2
+
+calibration:
+  points:
+  # центр
+  - [0.50, 0.50]
+
+  # углы
+  - [0.03, 0.03]
+  - [0.97, 0.03]
+  - [0.03, 0.97]
+  - [0.97, 0.97]
+
+  # левая грань
+  - [0.03, 0.20]
+  - [0.03, 0.35]
+  - [0.03, 0.50]
+  - [0.03, 0.65]
+  - [0.03, 0.80]
+
+  # правая грань
+  - [0.97, 0.20]
+  - [0.97, 0.35]
+  - [0.97, 0.50]
+  - [0.97, 0.65]
+  - [0.97, 0.80]
+
+  # верх
+  - [0.20, 0.03]
+  - [0.50, 0.03]
+  - [0.80, 0.03]
+
+  # низ
+  - [0.20, 0.97]
+  - [0.50, 0.97]
+  - [0.80, 0.97]
+
+  seconds_per_point: 1.20
+  samples_per_point: 24
+
+experiment:
+  prep_seconds: 3.0
+  record_seconds: 5.0
+  tile_trial_seconds: 2.0
+  grid_rows: 3
+  grid_cols: 3
+
+head_targets:
+  - marker: 1
+    direction: CENTER
+    angle_deg: 0.0
+
+  - marker: 2
+    direction: RIGHT
+    angle_deg: 11.4
+  - marker: 3
+    direction: RIGHT
+    angle_deg: 22.0
+  - marker: 4
+    direction: RIGHT
+    angle_deg: 31.2
+
+  - marker: 5
+    direction: LEFT
+    angle_deg: 11.4
+  - marker: 6
+    direction: LEFT
+    angle_deg: 22.0
+  - marker: 7
+    direction: LEFT
+    angle_deg: 31.2
+
+  - marker: 8
+    direction: UP
+    angle_deg: 11.4
+  - marker: 9
+    direction: UP
+    angle_deg: 22.0
+  - marker: 10
+    direction: UP
+    angle_deg: 31.2
+
+# Сравнение углов головы.
+# В эксперименте одновременно считаются оба метода:
+# 1) laser — по задней камере и лазерной точке
+# 2) face_geometry — без лазера, по камере лица, расстоянию камера/лицо и межглазному/межбровному расстоянию
+head_angle:
+  compare_both: true
+
+  face_geometry:
+    enabled: true
+
+    # ВАЖНО: сюда забиваете ваши реальные значения.
+    # camera_to_face_cm — расстояние от камеры лица до лица, см.
+    camera_to_face_cm: 66.0
+
+    # eyebrow_distance_cm — реальное межглазное/межбровное расстояние, см.
+    # Если меряете между внешними углами глаз — впишите это значение.
+    eyebrow_distance_cm: 6.3
+
+    invert_yaw: true
+    invert_pitch: true
+    yaw_gain: 1.0
+    pitch_gain: 3.0
+    smoothing_alpha: 1.0
+    deadzone_deg: 0.0
+
+    yaw_nose_deadzone_ratio: 0.025
+    suppress_yaw_when_pitch_dominates: true
+    pitch_dominance_ratio: 1.8
+    yaw_when_pitch_factor: 0.15
+
+  persistence_frames: 5
+  enabled: false
+  calibration_json:
+
+  camera:
+    index: 2
+    width:
+    height:
+    fps:
+    fallback_index: 2
+
+  # Расстояние от точки вращения головы до стены, в сантиметрах.
+  # Если камера стоит за спиной, всё равно нужен именно head-to-wall, а не camera-to-wall.
+  wall_distance_cm: 99.0
+
+  # Размер области стены между 4 ArUco-маркерами: ширина и высота в сантиметрах.
+  wall_size_cm: [100.0, 70.0]
+
+  # Если знак угла получился обратный — поменяйте эти флаги.
+  invert_yaw: false
+  invert_pitch: true
+
+  # Fallback без ArUco: сантиметров на пиксель.
+
+  auto_scale_from_frame: false
+  px_to_cm_x: 0.23
+  px_to_cm_y: 0.21
+  center_px: [0.0, 0.0]
+  center_wall_cm: [50.0, 35.0]
+
+  # Детектор лазера. combined = HSV red + red-channel dominance + bright hotspot.
+  # Это устойчивее для разных камер: вебка/телефон/HDR/пересвет на белой стене.
+  detection_mode: red_dominance
+
+  # HSV-маска красной лазерной точки.
+  hsv:
+    lower1: [0, 70, 100]
+    upper1: [15, 255, 255]
+    lower2: [165, 70, 100]
+    upper2: [180, 255, 255]
+
+  # Дополнительная проверка: красный канал должен быть сильнее G/B.
+  min_red_channel: 90
+  red_delta: 15
+
+  # Fallback для пересвеченного лазера на белой стене: искать маленький яркий hotspot.
+  allow_white_hotspot: true
+  bright_percentile: 99.6
+  bright_min_value: 210
+
+  min_area_px: 1
+  max_area_px: 15000
+  blur_kernel: 7
+  morph_kernel: 3
+
+  # ArUco-маркеры стены в порядке: верх-лево, верх-право, низ-право, низ-лево.
+  # Напечатайте 4 маркера из DICT_4X4_50 с этими id и разместите по углам области.
+  aruco:
+    dictionary: DICT_4X4_50
+    corner_ids: [0, 1, 3, 2]
+
+gaze_tiles:
+  existing_gaze_smoothing_alpha: 0.18
+  existing_gaze_median_window: 3
+  existing_gaze_hold_frames: 6
+  existing_gaze_ignore_blink: true
+
+  gaze_stretch_x: 1.00
+  gaze_stretch_y: 1.00
+
+  gaze_edge_boost_x: 0.02
+  gaze_edge_boost_y: 0.06
+  gaze_corner_boost: 0.10
+
+  gaze_top_left_boost_x: 1.03
+  gaze_top_left_boost_y: 1.08
+
+  gaze_max_scale_x: 1.25
+  gaze_max_scale_y: 1.30

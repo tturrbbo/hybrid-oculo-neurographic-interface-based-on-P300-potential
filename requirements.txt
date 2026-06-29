@@ -1,0 +1,17 @@
+numpy
+pandas
+scipy
+scikit-learn
+joblib
+opencv-contrib-python
+mediapipe
+pillow
+screeninfo
+psychopy
+pyglet
+pylsl
+PyQt5
+pyqtgraph
+pyyaml
+matplotlib
+pygrabber

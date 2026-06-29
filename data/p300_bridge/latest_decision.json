@@ -1,0 +1,14 @@
+{
+  "timestamp_unix": 1782306201.3053179,
+  "run_seq": 1,
+  "target_tile_id": 0,
+  "p300_tile_id": 3,
+  "eye_gaze_tile_id": 8,
+  "final_tile_id": 3,
+  "decision_source": "p300",
+  "reason": "взгляд не совпал с заданной плиткой",
+  "gaze_counts": "1:8;6:2;8:210",
+  "gaze_rows_used": 226,
+  "winner_digit": 3,
+  "p300_available": true
+}
