@@ -1,3 +1,5 @@
+# Благодарность за вайбкодинг @vrnchkseb
+
 # EyeGaze P300 экспериментальный стенд
 
 python -m eyegaze.app.gaze_tiles_test --participant P01 --config config/experiment.yaml
