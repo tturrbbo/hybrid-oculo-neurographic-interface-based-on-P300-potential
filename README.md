@@ -1,5 +1,3 @@
-# Благодарность за вайбкодинг @vrnchkseb
-
 # EyeGaze P300 экспериментальный стенд
 
 python -m eyegaze.app.gaze_tiles_test --participant P01 --config config/experiment.yaml
@@ -53,3 +51,5 @@ python -m eyegaze.app.analyze
 - `START_MONITOR.bat`
 - `START_EXPERIMENT.bat`
 - `START_ANALYZE.bat`
+
+# Благодарность за вайбкодинг @vrnchkseb
